@@ -6,10 +6,12 @@
 import React from 'react';
 import { Award, Quote, ShieldCheck } from 'lucide-react';
 import { BIO_DATA } from '../data';
+// ✅ IMPORTAMOS LA IMAGEN DIRECTAMENTE
+import avatarImage from '../assets/images/vero_arbol_canvas.png';
 
 export default function Bio() {
-  // ✅ Ruta CORRECTA con el nombre exacto de tu archivo
-  const avatar = '/assets/images/vero_arbol_canvas.png';
+  // ✅ Usamos la imagen importada
+  const avatar = avatarImage;
   
   const taoFlowPhoto = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop';
 
