@@ -3,31 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef } from 'react';
-import { ArrowRight, BookOpen, Compass, Camera, RotateCcw } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, BookOpen, Compass } from 'lucide-react';
 import { motion } from 'motion/react';
 import { BIO_DATA } from '../data';
 import { useAvatar } from '../hooks/useAvatar';
 
 export default function Hero() {
-  const { avatar, updateAvatar, resetAvatar } = useAvatar();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateAvatar(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const triggerUpload = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    fileInputRef.current?.click();
-  };
+  const { avatar } = useAvatar();
   const handleScrollTo = (id: string) => {
     const target = document.querySelector(id);
     if (target) {
@@ -76,44 +59,16 @@ export default function Hero() {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
           </span>
 
-          {/* Profile circle with professional dual layered borders and direct upload capability */}
           <div 
-            onClick={triggerUpload}
-            className="group/avatar relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2px] bg-gradient-to-tr from-gold-light via-sage-medium to-gold-dark overflow-hidden cursor-pointer shadow-sm"
-            title="Haz clic para subir una nueva foto de marca personal"
+            className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2px] bg-gradient-to-tr from-gold-light via-sage-medium to-gold-dark overflow-hidden shadow-sm"
           >
             <img
               src={avatar}
               alt="Dra. Verónica Barraza Marca Personal"
-              className="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover/avatar:scale-110 filter contrast-[1.01]"
+              className="w-full h-full object-cover rounded-full transition-transform duration-700 hover:scale-110 filter contrast-[1.01]"
               referrerPolicy="no-referrer"
             />
-            
-            {/* Interactive Upload Overlay */}
-            <div className="absolute inset-x-0 bottom-0 bg-sage-dark/85 h-2/5 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-300">
-              <Camera className="h-3.5 w-3.5 text-gold-light" />
-            </div>
-
-            {/* Hidden File Input */}
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              accept="image/*"
-              className="hidden"
-            />
           </div>
-
-          {/* Reset option if custom image is set */}
-          {avatar !== BIO_DATA.avatar && (
-            <button
-              onClick={(e) => { e.stopPropagation(); resetAvatar(); }}
-              className="absolute -top-1.5 -left-1.5 bg-red-800 text-gold-cream rounded-full p-1 border border-white hover:bg-red-700 transition z-30 shadow-md"
-              title="Restaurar foto original"
-            >
-              <RotateCcw className="h-2.5 w-2.5" />
-            </button>
-          )}
 
           {/* Name & custom label */}
           <div className="mt-2 space-y-0.5">
