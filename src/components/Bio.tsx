@@ -7,12 +7,9 @@ import React from 'react';
 import { Award, Quote, ShieldCheck } from 'lucide-react';
 import { BIO_DATA } from '../data';
 
-// ✅ IMPORTAMOS LA IMAGEN COMO MÓDULO
-import avatarImage from '../assets/images/vero_arbol_canvas.png?url';
-
 export default function Bio() {
-  // ✅ Usamos la URL generada por Vite
-  const avatar = avatarImage;
+  // 🔥 SOLUCIÓN URGENTE: Usar URL externa mientras
+  const avatar = 'https://i.ibb.co/xyz/veronica.jpg'; // 👈 CAMBIA ESTO
   
   const taoFlowPhoto = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop';
 
@@ -41,10 +38,9 @@ export default function Bio() {
                   className="w-full h-[450px] object-cover rounded-xl filter contrast-[1.02] transition-all duration-300 hover:scale-[1.01]"
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    // ✅ Si falla, muestra un mensaje en consola
-                    console.error('Error cargando avatar:', e);
-                    // ✅ Opcional: muestra una imagen de respaldo
-                    e.currentTarget.src = 'https://via.placeholder.com/450x450/8B7D6B/FFFFFF?text=Ver%C3%B3nica';
+                    console.error('Error en la imagen:', e);
+                    // Si falla, usa un placeholder
+                    e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="450" height="450"%3E%3Crect width="450" height="450" fill="%238B7D6B"/%3E%3Ctext x="50%" y="50%" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dy=".3em"%3EVerónica%3C/text%3E%3C/svg%3E';
                   }}
                 />
                 
@@ -67,27 +63,20 @@ export default function Bio() {
 
           {/* History and details Right Aspect */}
           <div className="lg:col-span-7 flex flex-col justify-center" id="bio-content-wrapper">
-            {/* Secundary heading */}
             <span className="text-sm uppercase tracking-widest text-gold-dark font-semibold font-sans mb-2">
               MEDICINA PARA EL ALMA Y EL CORAZÓN
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif text-sage-dark tracking-tight mb-6">
               Sobre Verónica Barraza
             </h2>
-
-            {/* Main statement block quote */}
             <p className="text-lg font-medium text-sage-medium leading-relaxed italic border-l-2 border-gold-light pl-4 mb-8">
               &quot;Fluir, fluir como el Tao. Fluir como el Agua en búsqueda permanente del Mar y vivir con salud y armonía&quot;
             </p>
-
-            {/* Biography text blocks */}
             <div className="space-y-4 text-earth-charcoal/90 leading-relaxed text-sm sm:text-base font-sans mb-8">
               {BIO_DATA.historia.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
-
-            {/* Certifications and achievements box */}
             <div className="bg-earth-cream/60 rounded-xl p-6 border border-earth-sand/40 mb-8">
               <h3 className="text-xs uppercase tracking-widest text-sage-dark font-bold mb-4 flex items-center space-x-2">
                 <Award className="h-4 w-4 text-gold-dark" />
@@ -102,8 +91,6 @@ export default function Bio() {
                 ))}
               </ul>
             </div>
-
-            {/* Signature custom hand styling */}
             <div className="flex flex-col items-end self-end mr-6 space-y-4">
               <div className="flex flex-col items-end">
                 <span className="font-hand text-5xl text-gold-dark">Veronica Barraza</span>
@@ -111,8 +98,6 @@ export default function Bio() {
                   creadora Metodo TaoFlow
                 </span>
               </div>
-
-              {/* Customizable photo representing the Tao Flow method */}
               <div className="relative group/taophoto">
                 <div 
                   className="relative w-48 sm:w-56 h-28 sm:h-32 rounded-xl overflow-hidden border border-gold-light/40 bg-earth-sand shadow-xs hover:shadow-md hover:border-gold-dark transition-all duration-300"
@@ -125,13 +110,10 @@ export default function Bio() {
                     referrerPolicy="no-referrer"
                   />
                 </div>
-                
-                {/* Micro caption */}
                 <div className="text-right text-[9px] uppercase tracking-widest text-earth-clay font-sans font-bold mt-1.5">
                   ✦ El flujo activo de la energía ✦
                 </div>
               </div>
-
             </div>
           </div>
         </div>
