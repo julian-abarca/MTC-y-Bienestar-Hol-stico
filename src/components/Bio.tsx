@@ -6,11 +6,12 @@
 import React from 'react';
 import { Award, Quote, ShieldCheck } from 'lucide-react';
 import { BIO_DATA } from '../data';
-import { useAvatar } from '../hooks/useAvatar';
 
 export default function Bio() {
+  // ✅ Ruta CORREGIDA de tu foto - Cambia el nombre por el tuyo
+  const avatar = '/assets/images/veronica-perfil.jpg'; // 👈 MODIFICA ESTE NOMBRE
+  
   const taoFlowPhoto = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop';
-  const { avatar } = useAvatar();
 
   return (
     <section id="bio" className="py-24 bg-white relative overflow-hidden">
