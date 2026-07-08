@@ -3,47 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef, useState } from 'react';
-import { Award, BookOpen, Quote, ShieldCheck, Camera, RotateCcw } from 'lucide-react';
+import React from 'react';
+import { Award, Quote, ShieldCheck } from 'lucide-react';
 import { BIO_DATA } from '../data';
-import { motion } from 'motion/react';
 import { useAvatar } from '../hooks/useAvatar';
 
 export default function Bio() {
   const taoFlowPhoto = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop';
-  const { avatar, updateAvatar, resetAvatar } = useAvatar();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateAvatar(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const triggerUpload = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateAvatar(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const { avatar } = useAvatar();
 
   return (
     <section id="bio" className="py-24 bg-white relative overflow-hidden">
@@ -62,44 +29,14 @@ export default function Bio() {
               
               {/* Outer frame */}
               <div 
-                className="relative bg-earth-sand p-3.5 rounded-2xl shadow-xl border border-earth-sand/40 cursor-pointer overflow-hidden group/image"
-                onClick={triggerUpload}
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
+                className="relative bg-earth-sand p-3.5 rounded-2xl shadow-xl border border-earth-sand/40 overflow-hidden"
               >
                 <img
                   src={avatar}
                   alt="Dra. Verónica Barraza"
-                  className="w-full h-[450px] object-cover rounded-xl filter contrast-[1.02] transition-all duration-300 group-hover/image:scale-[1.01]"
+                  className="w-full h-[450px] object-cover rounded-xl filter contrast-[1.02] transition-all duration-300 hover:scale-[1.01]"
                   referrerPolicy="no-referrer"
                 />
-                
-                {/* Overlay on hover */}
-                <div className="absolute inset-3.5 bg-black/40 rounded-xl opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white space-y-2">
-                  <Camera className="h-10 w-10 text-gold-light animate-pulse" />
-                  <span className="text-sm font-semibold tracking-wide">Haz clic o arrastra tu foto aquí</span>
-                  <span className="text-[10px] text-gray-300 uppercase tracking-widest text-center px-4">Modifica tu foto de perfil real</span>
-                </div>
-
-                {/* Invisible input file */}
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  className="hidden"
-                />
-
-                {/* Reset button inside avatar */}
-                {avatar !== BIO_DATA.avatar && (
-                  <button
-                    onClick={(e) => { e.stopPropagation(); resetAvatar(); }}
-                    className="absolute top-6 right-6 bg-red-800/90 text-white p-2 rounded-lg hover:bg-red-700 transition"
-                    title="Restaurar foto original"
-                  >
-                    <RotateCcw className="h-4 w-4" />
-                  </button>
-                )}
                 
                 {/* Micro badge nested on image */}
                 <div className="absolute bottom-8 right-8 bg-sage-dark/95 backdrop-blur-md text-gold-cream px-5 py-3 rounded-xl border border-gold-light/20 shadow-lg flex items-center space-x-2">
