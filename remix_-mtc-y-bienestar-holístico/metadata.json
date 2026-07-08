@@ -1,0 +1,8 @@
+{
+  "name": "Remix: MTC y Bienestar Holístico",
+  "description": "Sitio web premium e interactivo en español para servicios holísticos, medicina tradicional china (MTC), coaching espiritual, talleres, retiros, descarga de libros gratuitos y venta de obras autorales con tonos de calma y paz.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
