@@ -8,8 +8,8 @@ import { Award, Quote, ShieldCheck } from 'lucide-react';
 import { BIO_DATA } from '../data';
 
 export default function Bio() {
-  // ✅ Ruta CORREGIDA de tu foto - Cambia el nombre por el tuyo
-  const avatar = '/assets/images/veronica-perfil.jpg'; // 👈 MODIFICA ESTE NOMBRE
+  // ✅ Ruta CORRECTA con el nombre exacto de tu archivo
+  const avatar = '/assets/images/vero_arbol_canvas.png';
   
   const taoFlowPhoto = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop';
 
