@@ -6,11 +6,12 @@
 import React from 'react';
 import { Award, Quote, ShieldCheck } from 'lucide-react';
 import { BIO_DATA } from '../data';
-// ✅ IMPORTAMOS LA IMAGEN DIRECTAMENTE
-import avatarImage from '../assets/images/vero_arbol_canvas.png';
+
+// ✅ IMPORTAMOS LA IMAGEN COMO MÓDULO
+import avatarImage from '../assets/images/vero_arbol_canvas.png?url';
 
 export default function Bio() {
-  // ✅ Usamos la imagen importada
+  // ✅ Usamos la URL generada por Vite
   const avatar = avatarImage;
   
   const taoFlowPhoto = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop';
@@ -39,6 +40,12 @@ export default function Bio() {
                   alt="Dra. Verónica Barraza"
                   className="w-full h-[450px] object-cover rounded-xl filter contrast-[1.02] transition-all duration-300 hover:scale-[1.01]"
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    // ✅ Si falla, muestra un mensaje en consola
+                    console.error('Error cargando avatar:', e);
+                    // ✅ Opcional: muestra una imagen de respaldo
+                    e.currentTarget.src = 'https://via.placeholder.com/450x450/8B7D6B/FFFFFF?text=Ver%C3%B3nica';
+                  }}
                 />
                 
                 {/* Micro badge nested on image */}
