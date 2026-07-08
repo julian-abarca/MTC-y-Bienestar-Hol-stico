@@ -13,8 +13,10 @@ import coverImage from '../assets/images/calmar_fuego_cover_1780352229613.png';
 // @ts-ignore
 import coverImageSecond from '../assets/images/energia_vital_cover_1780352750275.png';
 import { EbookReaderPages } from './EbookReaderPages';
+import { useAvatar } from '../hooks/useAvatar';
 
 export default function BooksSection() {
+  const { avatar } = useAvatar();
   const [downloadEmail, setDownloadEmail] = useState('');
   const [hasDownloaded, setHasDownloaded] = useState(false);
   const [downloadEmailSecond, setDownloadEmailSecond] = useState('');
@@ -32,21 +34,6 @@ export default function BooksSection() {
   const [isReaderOpen, setIsReaderOpen] = useState(false);
   const [readerBookId, setReaderBookId] = useState<'recetario-gratis' | 'energia-vital-gratis'>('recetario-gratis');
   const [readerPage, setReaderPage] = useState(0);
-  const [avatar, setAvatar] = useState(BIO_DATA.avatar);
-
-  useEffect(() => {
-    const loadAvatar = () => {
-      const saved = localStorage.getItem('custom_avatar');
-      if (saved) {
-        setAvatar(saved);
-      } else {
-        setAvatar(BIO_DATA.avatar);
-      }
-    };
-    loadAvatar();
-    window.addEventListener('custom_avatar_updated', loadAvatar);
-    return () => window.removeEventListener('custom_avatar_updated', loadAvatar);
-  }, []);
 
   const freeBooks = LIBROS_DATA.filter(b => b.esGratuito);
   const freeBook = freeBooks.find(b => b.id === 'recetario-gratis')!;

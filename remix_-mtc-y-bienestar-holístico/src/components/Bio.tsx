@@ -3,67 +3,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Award, BookOpen, Quote, ShieldCheck, Camera, RotateCcw } from 'lucide-react';
 import { BIO_DATA } from '../data';
 import { motion } from 'motion/react';
+import { useAvatar } from '../hooks/useAvatar';
 
 export default function Bio() {
-  const [avatar, setAvatar] = useState(BIO_DATA.avatar);
-  const [taoFlowPhoto, setTaoFlowPhoto] = useState('https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop');
+  const taoFlowPhoto = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop';
+  const { avatar, updateAvatar, resetAvatar } = useAvatar();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const taoFlowInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const loadAvatar = () => {
-      const saved = localStorage.getItem('custom_avatar');
-      if (saved) {
-        setAvatar(saved);
-      } else {
-        setAvatar(BIO_DATA.avatar);
-      }
-    };
-    const loadTaoFlowPhoto = () => {
-      const saved = localStorage.getItem('custom_tao_flow_photo');
-      if (saved) {
-        setTaoFlowPhoto(saved);
-      } else {
-        setTaoFlowPhoto('https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop');
-      }
-    };
-    loadAvatar();
-    loadTaoFlowPhoto();
-    window.addEventListener('custom_avatar_updated', loadAvatar);
-    window.addEventListener('custom_tao_flow_photo_updated', loadTaoFlowPhoto);
-    return () => {
-      window.removeEventListener('custom_avatar_updated', loadAvatar);
-      window.removeEventListener('custom_tao_flow_photo_updated', loadTaoFlowPhoto);
-    };
-  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result as string;
-        localStorage.setItem('custom_avatar', base64String);
-        setAvatar(base64String);
-        window.dispatchEvent(new Event('custom_avatar_updated'));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleTaoFlowFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        localStorage.setItem('custom_tao_flow_photo', base64String);
-        setTaoFlowPhoto(base64String);
-        window.dispatchEvent(new Event('custom_tao_flow_photo_updated'));
+        updateAvatar(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -71,10 +27,6 @@ export default function Bio() {
 
   const triggerUpload = () => {
     fileInputRef.current?.click();
-  };
-
-  const triggerTaoFlowUpload = () => {
-    taoFlowInputRef.current?.click();
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -87,27 +39,10 @@ export default function Bio() {
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result as string;
-        localStorage.setItem('custom_avatar', base64String);
-        setAvatar(base64String);
-        window.dispatchEvent(new Event('custom_avatar_updated'));
+        updateAvatar(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const resetAvatar = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    localStorage.removeItem('custom_avatar');
-    setAvatar(BIO_DATA.avatar);
-    window.dispatchEvent(new Event('custom_avatar_updated'));
-  };
-
-  const resetTaoFlowPhoto = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    localStorage.removeItem('custom_tao_flow_photo');
-    setTaoFlowPhoto('https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop');
-    window.dispatchEvent(new Event('custom_tao_flow_photo_updated'));
   };
 
   return (
@@ -158,7 +93,7 @@ export default function Bio() {
                 {/* Reset button inside avatar */}
                 {avatar !== BIO_DATA.avatar && (
                   <button
-                    onClick={resetAvatar}
+                    onClick={(e) => { e.stopPropagation(); resetAvatar(); }}
                     className="absolute top-6 right-6 bg-red-800/90 text-white p-2 rounded-lg hover:bg-red-700 transition"
                     title="Restaurar foto original"
                   >
@@ -233,9 +168,8 @@ export default function Bio() {
               {/* Customizable photo representing the Tao Flow method */}
               <div className="relative group/taophoto">
                 <div 
-                  onClick={triggerTaoFlowUpload}
-                  className="relative w-48 sm:w-56 h-28 sm:h-32 rounded-xl overflow-hidden border border-gold-light/40 bg-earth-sand shadow-xs hover:shadow-md hover:border-gold-dark transition-all duration-300 cursor-pointer"
-                  title="Haz clic para subir una foto representativa de tu Método Tao Flow"
+                  className="relative w-48 sm:w-56 h-28 sm:h-32 rounded-xl overflow-hidden border border-gold-light/40 bg-earth-sand shadow-xs hover:shadow-md hover:border-gold-dark transition-all duration-300"
+                  title="Método Tao Flow"
                 >
                   <img
                     src={taoFlowPhoto}
@@ -243,24 +177,7 @@ export default function Bio() {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover/taophoto:scale-105"
                     referrerPolicy="no-referrer"
                   />
-                  
-                  {/* Overlay on hover to change image */}
-                  <div className="absolute inset-0 bg-sage-dark/60 opacity-0 group-hover/taophoto:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-gold-cream text-xs font-sans gap-1">
-                    <Camera className="h-4 w-4 text-gold-light animate-bounce" />
-                    <span className="text-[9px] uppercase tracking-wider font-bold">Cambiar foto de método</span>
-                  </div>
                 </div>
-
-                {/* Reset button inside photo */}
-                {taoFlowPhoto !== 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop' && (
-                  <button
-                    onClick={resetTaoFlowPhoto}
-                    className="absolute -top-1.5 -left-1.5 bg-red-800 text-gold-cream rounded-full p-1 border border-white hover:bg-red-700 transition z-10 shadow-xs"
-                    title="Restaurar foto predeterminada"
-                  >
-                    <RotateCcw className="h-2.5 w-2.5" />
-                  </button>
-                )}
                 
                 {/* Micro caption */}
                 <div className="text-right text-[9px] uppercase tracking-widest text-earth-clay font-sans font-bold mt-1.5">
@@ -268,16 +185,7 @@ export default function Bio() {
                 </div>
               </div>
 
-              {/* Hidden File Input for Tao Flow Photo */}
-              <input
-                type="file"
-                ref={taoFlowInputRef}
-                onChange={handleTaoFlowFileChange}
-                accept="image/*"
-                className="hidden"
-              />
             </div>
-
           </div>
         </div>
       </div>

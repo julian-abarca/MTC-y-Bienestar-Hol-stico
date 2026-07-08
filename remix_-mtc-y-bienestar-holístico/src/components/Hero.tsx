@@ -3,38 +3,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, BookOpen, Compass, ShieldCheck, Camera, RotateCcw } from 'lucide-react';
+import React, { useRef } from 'react';
+import { ArrowRight, BookOpen, Compass, Camera, RotateCcw } from 'lucide-react';
 import { motion } from 'motion/react';
 import { BIO_DATA } from '../data';
+import { useAvatar } from '../hooks/useAvatar';
 
 export default function Hero() {
-  const [avatar, setAvatar] = useState(BIO_DATA.avatar);
+  const { avatar, updateAvatar, resetAvatar } = useAvatar();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const loadAvatar = () => {
-      const saved = localStorage.getItem('custom_avatar');
-      if (saved) {
-        setAvatar(saved);
-      } else {
-        setAvatar(BIO_DATA.avatar);
-      }
-    };
-    loadAvatar();
-    window.addEventListener('custom_avatar_updated', loadAvatar);
-    return () => window.removeEventListener('custom_avatar_updated', loadAvatar);
-  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result as string;
-        localStorage.setItem('custom_avatar', base64String);
-        setAvatar(base64String);
-        window.dispatchEvent(new Event('custom_avatar_updated'));
+        updateAvatar(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -44,14 +28,6 @@ export default function Hero() {
     e.stopPropagation();
     fileInputRef.current?.click();
   };
-
-  const resetAvatar = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    localStorage.removeItem('custom_avatar');
-    setAvatar(BIO_DATA.avatar);
-    window.dispatchEvent(new Event('custom_avatar_updated'));
-  };
-
   const handleScrollTo = (id: string) => {
     const target = document.querySelector(id);
     if (target) {
@@ -92,7 +68,7 @@ export default function Hero() {
         <div 
           onClick={() => handleScrollTo('#bio')}
           className="group relative flex flex-col items-center bg-white/70 hover:bg-white/90 backdrop-blur-md p-3 rounded-2xl border border-gold-light/30 hover:border-gold-dark shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer max-w-[130px] text-center"
-          title="Verónica Barraza · Sobre Mí y Actualización de Foto"
+          title="Verónica Barraza · Sobre Mí"
         >
           {/* Active pulse dot indicator of connection/mindfulness activity */}
           <span className="absolute top-3 right-3 flex h-2.5 w-2.5">
@@ -104,7 +80,7 @@ export default function Hero() {
           <div 
             onClick={triggerUpload}
             className="group/avatar relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2px] bg-gradient-to-tr from-gold-light via-sage-medium to-gold-dark overflow-hidden cursor-pointer shadow-sm"
-            title="Haz clic para subir una nueva foto de marca personal en el sello"
+            title="Haz clic para subir una nueva foto de marca personal"
           >
             <img
               src={avatar}
@@ -131,7 +107,7 @@ export default function Hero() {
           {/* Reset option if custom image is set */}
           {avatar !== BIO_DATA.avatar && (
             <button
-              onClick={resetAvatar}
+              onClick={(e) => { e.stopPropagation(); resetAvatar(); }}
               className="absolute -top-1.5 -left-1.5 bg-red-800 text-gold-cream rounded-full p-1 border border-white hover:bg-red-700 transition z-30 shadow-md"
               title="Restaurar foto original"
             >

@@ -7,25 +7,12 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Leaf, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BIO_DATA } from '../data';
+import { useAvatar } from '../hooks/useAvatar';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [avatar, setAvatar] = useState(BIO_DATA.avatar);
-
-  useEffect(() => {
-    const loadAvatar = () => {
-      const saved = localStorage.getItem('custom_avatar');
-      if (saved) {
-        setAvatar(saved);
-      } else {
-        setAvatar(BIO_DATA.avatar);
-      }
-    };
-    loadAvatar();
-    window.addEventListener('custom_avatar_updated', loadAvatar);
-    return () => window.removeEventListener('custom_avatar_updated', loadAvatar);
-  }, []);
+  const { avatar } = useAvatar();
 
   useEffect(() => {
     const handleScroll = () => {

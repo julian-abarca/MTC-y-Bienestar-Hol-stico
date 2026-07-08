@@ -5,11 +5,14 @@
 
 import { Servicio, Libro, Testimonio } from './types';
 
+// @ts-ignore
+import veroAvatar from './assets/images/vero_arbol_canvas.png';
+
 export const BIO_DATA = {
   nombre: 'Verónica Barraza',
   titulo: 'Especialista en Medicina Tradicional China y Guía de Despertar Espiritual',
   subtitulo: 'Alineando los cinco elementos para restaurar la armonía entre cuerpo, mente y alma.',
-  avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=600&auto=format&fit=crop',
+  avatar: veroAvatar,
   historia: [
     'Verónica Barraza es abogada de formación y una apasionada sanadora diplomada en Medicina Tradicional China por la Escuela Internacional Neijing (sede Cancún). Como profesora, instructora y capacitadora de esta milenaria tradición, ha dedicado años a profundizar en el estudio de la salud integral, participando en diversos congresos internacionales y posgrados especializados en Medicina Tradicional China y la Mujer, así como en Medicina China y el Espíritu.',
     'Practicante de Qi Gong y eterna estudiante de los misterios del ser, Verónica integra su formación profesional con una profunda sensibilidad humana. Sus intereses en la permacultura y la vivencia en comunidad reflejan su compromiso con una vida en armonía con la tierra y los ciclos naturales, principios que permean cada hacer.'
