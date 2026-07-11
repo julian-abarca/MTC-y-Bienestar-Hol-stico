@@ -8,6 +8,15 @@ import { Mail, Phone, MapPin, Send, Instagram, Youtube, Compass, CheckCircle2, H
 import { REDES_SOCIALES, SERVICIOS_DATA } from '../data';
 import { motion, AnimatePresence } from 'motion/react';
 
+// lucide-react no incluye un ícono oficial de TikTok, así que se define aquí como SVG simple
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M16.5 3c.3 1.9 1.5 3.4 3.3 3.9v2.7c-1.2 0-2.3-.4-3.3-1v6.6c0 3.2-2.6 5.8-5.8 5.8S5 18.4 5 15.2c0-3.1 2.5-5.6 5.5-5.8v2.7c-1.5.2-2.6 1.5-2.6 3.1 0 1.7 1.4 3.1 3.1 3.1s3.1-1.4 3.1-3.1V3h2.4z" />
+    </svg>
+  );
+}
+
 export default function ContactSection() {
   // Contact Form states
   const [nombre, setNombre] = useState('');
@@ -161,6 +170,15 @@ export default function ContactSection() {
                     title="Pinterest Recetero"
                   >
                     <Compass className="h-5 w-5" />
+                  </a>
+                  <a
+                    href={REDES_SOCIALES.tiktok}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3 bg-[#fbf5e6] hover:bg-gold-light/20 text-gold-dark hover:text-sage-dark rounded-full border border-[#dfc88a]/30 transition"
+                    title="Sígueme en TikTok"
+                  >
+                    <TikTokIcon className="h-5 w-5" />
                   </a>
                 </div>
               </div>
