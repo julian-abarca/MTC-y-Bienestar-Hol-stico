@@ -312,8 +312,9 @@ export const TESTIMONIOS_DATA: Testimonio[] = [
 ];
 
 export const REDES_SOCIALES = {
-  instagram: 'https://instagram.com/veronica.mtcholistica',
-  youtube: 'https://youtube.com/veronicabarraza.tao',
+  instagram: 'https://www.instagram.com/veronicabarrazamtc?igsh=ajd6MTRneGJ3N2to&utm_source=qr',
+  youtube: 'https://www.youtube.com/@verobarrazamtc.taoflow',
+  tiktok: 'https://www.tiktok.com/@veronica.barrazamtc',
   pinterest: 'https://pinterest.com/veronica_alquimia',
   email: 'hola@veronicabarrazamtc.com',
   whatsapp: 'https://wa.me/529848016723',
