@@ -12,6 +12,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import coverImage from '../assets/images/calmar_fuego_cover_1780352229613.png';
 // @ts-ignore
 import coverImageSecond from '../assets/images/energia_vital_cover_1780352750275.png';
+// @ts-ignore
+import escuchandoElAlmaCover from '../assets/images/escuchando_el_alma_cover.jpg';
 import { EbookReaderPages } from './EbookReaderPages';
 import { useAvatar } from '../hooks/useAvatar';
 
@@ -539,6 +541,13 @@ Dra. Verónica Barraza.
                 {/* Book graphic 3D paperback representation */}
                 <div className="relative group w-[160px] h-[230px] flex-shrink-0" id={`paid-book-cover-holder-${book.id}`}>
                   <div className="absolute inset-0 bg-gold-dark/10 rounded-lg filter blur-md transform translate-x-2 translate-y-2 group-hover:translate-x-3 transition-transform" />
+                  {book.id === 'escuchando-el-alma' ? (
+                    <img
+                      src={escuchandoElAlmaCover}
+                      alt={book.titulo}
+                      className="relative w-full h-full rounded-lg overflow-hidden shadow-md object-cover"
+                    />
+                  ) : (
                   <div
                     className={`relative w-full h-full rounded-lg overflow-hidden shadow-md flex flex-col justify-between p-4 border-l-[10px] ${
                       book.id === 'escuchando-el-alma' ? 'bg-[#2c3a30] text-gold-cream border-amber-950' : 'bg-[#e2cdc6] text-earth-charcoal border-[#3d352e]'
@@ -553,6 +562,7 @@ Dra. Verónica Barraza.
                       <Book className="h-4 w-4 opacity-50" />
                     </div>
                   </div>
+                  )}
                 </div>
 
                 {/* Details layout */}
