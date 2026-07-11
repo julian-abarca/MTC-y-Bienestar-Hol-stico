@@ -264,7 +264,7 @@ export const LIBROS_DATA: Libro[] = [
     paginas: 107,
     formato: 'Disponible en Tapa Blanda y ePUB',
     imagen: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=600&auto=format&fit=crop',
-    enlaceCompra: '#comprar-alquimia'
+    enlaceCompra: 'https://taoflow7.gumroad.com/l/escuchando-alma'
   },
   {
     id: 'sendero-retorno',
