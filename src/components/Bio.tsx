@@ -6,10 +6,10 @@
 import React from 'react';
 import { Award, Quote, ShieldCheck } from 'lucide-react';
 import { BIO_DATA } from '../data';
+import veronicaPerfil from '../assets/images/veronica_perfil.jpg';
 
 export default function Bio() {
-  // 🔥 SOLUCIÓN URGENTE: Usar URL externa mientras
-  const avatar = 'https://i.ibb.co/xyz/veronica.jpg'; // 👈 CAMBIA ESTO
+  const avatar = veronicaPerfil;
   
   const taoFlowPhoto = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop';
 
