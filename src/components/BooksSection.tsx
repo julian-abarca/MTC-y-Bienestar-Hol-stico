@@ -607,14 +607,26 @@ Dra. Verónica Barraza.
                           <span className="text-xl font-bold font-serif text-sage-dark">${book.precio} USD</span>
                         </div>
 
-                        <button
-                          type="button"
-                          onClick={() => startBookPurchase(book)}
-                          className="px-4.5 py-2.5 bg-sage-medium hover:bg-sage-dark text-gold-cream hover:text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 flex items-center space-x-2 shadow-xs"
-                        >
-                          <ShoppingCart className="h-3.5 w-3.5" />
-                          <span>Comprar Obra</span>
-                        </button>
+                        {book.enlaceCompra && book.enlaceCompra.startsWith('http') ? (
+                          <a
+                            href={book.enlaceCompra}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4.5 py-2.5 bg-sage-medium hover:bg-sage-dark text-gold-cream hover:text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 flex items-center space-x-2 shadow-xs"
+                          >
+                            <ShoppingCart className="h-3.5 w-3.5" />
+                            <span>Comprar Obra</span>
+                          </a>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => startBookPurchase(book)}
+                            className="px-4.5 py-2.5 bg-sage-medium hover:bg-sage-dark text-gold-cream hover:text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 flex items-center space-x-2 shadow-xs"
+                          >
+                            <ShoppingCart className="h-3.5 w-3.5" />
+                            <span>Comprar Obra</span>
+                          </button>
+                        )}
                       </>
                     )}
                   </div>
